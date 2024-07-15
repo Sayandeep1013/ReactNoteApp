@@ -46,6 +46,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow: hidden;
+
   @media (min-width: 768px) {
     flex-direction: row;
   }
@@ -185,13 +187,14 @@ const NoteListWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
+  display: flex;
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.color};
   min-height: 100vh;
-  display: flex;
+
   flex-direction: column;
   padding: 20px;
-  overflow: hidden;
+  overflow-y: hidden;
   @media (max-width: 768px) {
     overflow-y: auto;
   }
@@ -202,7 +205,7 @@ const NoteList = styled.div`
   grid-template-columns: repeat(
     auto-fill,
     minmax(300px, 1fr) // width increase
-  ); 
+  );
   gap: 15px;
   max-height: calc(100vh - 250px);
   overflow-y: auto;
@@ -499,7 +502,7 @@ function NoteApp() {
               {notes.length > 1 && (
                 <Button onClick={resetAllNotes}>Reset All</Button>
               )}
-              {filteredNotes.length > 6 && (
+              {filteredNotes.length > 3 && (
                 <Button onClick={toggleShowAll}>
                   {showAll ? "Show Less" : "See All"}
                 </Button>

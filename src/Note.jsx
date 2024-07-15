@@ -11,6 +11,9 @@ import {
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const NoteWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid ${({ theme }) => theme.borderColor};
   padding: 15px;
   border-radius: 5px;
@@ -38,11 +41,13 @@ const NoteWrapper = styled.div`
   height: ${({ isEditing, isExpanded }) =>
     isEditing || isExpanded ? "33%" : "auto"};
   max-width: ${({ isEditing, isExpanded }) =>
-    isEditing || isExpanded ? "1500px" : "none"};
+    isEditing || isExpanded ? "none" : "none"};
   max-height: ${({ isEditing, isExpanded }) =>
     isEditing || isExpanded ? "100vh" : "300px"};
   overflow-y: ${({ isEditing, isExpanded }) =>
     isEditing || isExpanded ? "auto" : "hidden"};
+  overflow-x: ${({ isEditing, isExpanded }) =>
+    isEditing || isExpanded ? "hidden" : "hidden"};
   z-index: ${({ isEditing, isExpanded }) =>
     isEditing || isExpanded ? 100 : 1};
   transition: all 0.3s ease;
@@ -65,14 +70,14 @@ const NoteContent = styled.div`
   overflow: hidden;
 `;
 
-const NoteTitle = styled.h3`
+const NoteTitle = styled.h1`
   margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const NoteDescription = styled.p`
+const NoteDescription = styled.h3`
   margin-bottom: 5px;
   display: -webkit-box;
   -webkit-line-clamp: ${({ isExpanded }) => (isExpanded ? "none" : "3")};
@@ -81,7 +86,7 @@ const NoteDescription = styled.p`
   text-overflow: ellipsis;
 `;
 
-const NoteCategory = styled.span`
+const NoteCategory = styled.h4`
   font-size: 0.8em;
   font-style: italic;
   margin-bottom: 15px;
@@ -91,24 +96,25 @@ const NoteCategory = styled.span`
 const NoteActions = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: auto;
+  padding-bottom: 5px;
   gap: 10px;
 `;
 
 const ActionButton = styled.button`
   padding: 5px;
-  font-size: 14px;
+
+  font-size: 18px;
   cursor: pointer;
   background-color: transparent;
   color: ${({ theme }) => theme.buttonColor};
   border: none;
   border-radius: 5px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   transition: opacity 0.3s ease;
+
   &:hover {
-    opacity: 0.8;
+    opacity: 0.6;
   }
 `;
 
@@ -128,7 +134,7 @@ const EditTextarea = styled.textarea`
   margin-bottom: 10px;
   padding: 5px;
   font-size: 14px;
-  width: calc(100% - 10px);
+
   height: 100px;
   background-color: ${({ theme }) => theme.inputBackground};
   color: ${({ theme }) => theme.inputColor};
@@ -136,6 +142,9 @@ const EditTextarea = styled.textarea`
   border-radius: 5px;
   resize: vertical;
   outline: none;
+  max-height: ${({ isEditing }) =>
+    isEditing ? "calc(100vh - 200px)" : "100px"};
+  overflow: hidden;
 `;
 
 const PriorityIndicator = styled.div`
@@ -199,8 +208,6 @@ function Note({ note, index, deleteNote, editNote, onCreateNote, onDragEnd }) {
     "#FFB6C1",
     "#8A2BE2",
     "#00CED1",
-    "#FFD700",
-    "#ADFF2F",
     "#7FFFD4",
     "#FF6347",
     "#40E0D0",
@@ -347,9 +354,6 @@ function Note({ note, index, deleteNote, editNote, onCreateNote, onDragEnd }) {
               </ActionButton>
               <ActionButton onClick={() => deleteNote(index)}>
                 <FaTrash title="Delete" />
-              </ActionButton>
-              <ActionButton onClick={toggleExpand}>
-                {isExpanded ? <FaCompressAlt /> : <FaExpandAlt />}
               </ActionButton>
             </NoteActions>
           </>
