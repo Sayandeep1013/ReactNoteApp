@@ -16,6 +16,7 @@
 //   background: ${({ theme }) => theme.noteBackground};
 //   color: ${({ theme }) => theme.color};
 //   position: relative;
+
 //   min-height: 150px;
 //   max-height: ${({ isEditing, isExpanded }) =>
 //     isExpanded ? "none" : isEditing ? "300px" : "200px"};

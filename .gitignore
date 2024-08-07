@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+src/Checkchanges.jsx
+src/CheckchangesV2.jsx
+
+
+
